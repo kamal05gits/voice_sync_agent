@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "functions": {
+    "api/chat.js": { "maxDuration": 60 },
+    "api/tts.js": { "maxDuration": 60 },
+    "api/trello.js": { "maxDuration": 30 }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(self), microphone=(self), display-capture=(self)" }
+      ]
+    }
+  ]
+}

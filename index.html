@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07131f" />
+  <title>VoiceSync Agent · Real-time multimodal assistance</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">⌁</div><div><strong>VoiceSync</strong><span>AGENT CONSOLE</span></div></div>
+      <div class="workspace-label">WORKSPACE</div>
+      <button class="nav-item active"><span>◉</span> Live session</button>
+      <button class="nav-item" id="historyBtn"><span>◷</span> Session history</button>
+      <button class="nav-item" id="settingsBtn"><span>⚙</span> Settings</button>
+      <div class="sidebar-spacer"></div>
+      <div class="privacy-card"><div class="privacy-icon">✓</div><div><b>Visual privacy</b><p>Camera and screen frames are sent only with a turn.</p></div></div>
+      <div class="session-chip"><div class="session-pulse"></div><div><b>Private visual session</b><span>Only action receipts persist locally</span></div></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><div><p class="eyebrow">PS-05 · REAL-TIME VOICE & MULTIMODAL AGENTS</p><h1>Live session</h1></div><div class="top-actions"><div class="status"><i></i> Checking providers…</div><button class="icon-btn" id="helpBtn" title="How VoiceSync works" aria-label="How VoiceSync works">?</button><button class="icon-btn" id="resetBtn" title="Reset session" aria-label="Reset session">↻</button></div></header>
+
+      <section class="session-grid">
+        <div class="conversation panel">
+          <div class="panel-head"><div><h2>Conversation</h2><span class="muted">Speak naturally — visual context is analysed only when sent</span></div><div class="latency"><i></i> <span id="latency">—</span> response</div></div>
+          <div class="messages" id="messages" aria-live="polite">
+            <div class="message agent"><div class="message-avatar">⌁</div><div><div class="message-meta"><b>VoiceSync</b><span>just now</span></div><p>Hi! I’m ready to listen and look. Share your camera or screen, then ask me anything about what you’re working on.</p><div class="context-pill">⌁ Text context · connect a source for vision</div></div></div>
+            <div class="suggestions"><button data-prompt="What do you see in my shared context?">✦ What do you see?</button><button data-prompt="Summarize the current context">≡ Summarize this</button><button data-prompt="What changed since the previous submitted frame?">↔ What changed?</button><button data-prompt="Help me plan my next step">→ Plan next step</button></div>
+          </div>
+          <div class="composer"><div class="composer-inner"><textarea id="prompt" rows="1" maxlength="4000" aria-label="Message VoiceSync" placeholder="Ask VoiceSync anything…"></textarea><button class="send-btn" id="sendBtn" aria-label="Send">↑</button></div><div class="composer-tools"><div class="tool-group"><button class="tool" id="micBtn" aria-pressed="false"><span>●</span> <b>Microphone</b><small id="micLabel">click to speak</small></button><button class="tool" id="cameraBtn"><span>▣</span> <b>Camera</b><small id="cameraLabel">off</small></button><button class="tool" id="screenBtn"><span>▧</span> <b>Screen</b><small id="screenLabel">off</small></button><button class="tool" id="documentBtn"><span>▤</span> <b>Document</b><small id="documentLabel">upload</small></button><input id="documentInput" type="file" accept="image/png,image/jpeg,image/webp" hidden /></div><div class="secure">⌁ visual frame sent only on submit</div></div></div>
+        </div>
+
+        <div class="context-column">
+          <div class="context panel"><div class="panel-head"><div><h2>Live context</h2><span class="muted">What the agent can see</span></div><span class="live-badge idle" id="liveBadge"><i></i> <span id="liveBadgeText">IDLE</span></span></div><div class="preview" id="preview"><div class="empty-preview"><div class="scan-ring">⌁</div><b>No visual feed connected</b><span>Turn on your camera or share your screen<br/>to give VoiceSync more context.</span><button class="outline-btn" id="connectBtn">＋ Connect a source</button></div><video id="video" autoplay muted playsinline hidden></video><img id="documentPreview" alt="Uploaded visual document preview" hidden /><div class="preview-overlay" id="previewOverlay" hidden><span>● LIVE CONTEXT</span><small id="sourceName">Camera</small></div></div><div class="context-footer"><div><span class="signal-dot"></span><span id="contextStatus">Awaiting visual context</span></div><button class="text-btn" id="clearContext">Clear</button></div></div>
+          <div class="actions panel"><div class="panel-head"><div><h2>Actions</h2><span class="muted">Write actions require informed approval</span></div><span class="lock">⌑</span></div><div class="action-row"><div class="action-icon blue">⌘</div><div><b>Summarize context</b><span>Generate a concise overview</span></div><button class="run-btn" data-action="summarize">Run <span>→</span></button></div><div class="action-row"><div class="action-icon purple">✓</div><div><b>Extract visible details</b><span>Read text and key elements</span></div><button class="run-btn" data-action="extract">Run <span>→</span></button></div><div class="action-row"><div class="action-icon amber">⚡</div><div><b>Create follow-up card</b><span id="taskActionLabel">Checks Trello status before approval</span></div><button class="run-btn approval" data-action="task">Review <span>→</span></button></div></div>
+        </div>
+      </section>
+      <footer class="footer"><span>VoiceSync Agent <b>v1.4 prototype</b></span><span>Built for BuildFastWithAI Hack 26 · <a href="https://github.com/kamal05gits/voice_sync_agent" target="_blank" rel="noreferrer">GitHub ↗</a></span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop" id="approvalModal" hidden><div class="modal approval-modal" role="dialog" aria-modal="true" aria-labelledby="approvalTitle"><div class="modal-icon">!</div><h3 id="approvalTitle">Approval required</h3><p>Review and edit the exact write before anything changes.</p><div class="approval-target"><span>DESTINATION</span><strong id="approvalTarget">Checking integration…</strong></div><div class="approval-summary"><span>PROPOSED WRITE</span><label for="approvalActionTitle">Card title</label><input id="approvalActionTitle" maxlength="120" /><label for="approvalActionDetails">Description</label><textarea id="approvalActionDetails" maxlength="2000" rows="5"></textarea></div><div class="action-progress" id="approvalProgress" role="status" aria-live="polite">Nothing has been written yet.</div><div class="modal-actions"><button class="outline-btn" id="cancelApproval">Reject</button><button class="primary-btn" id="confirmApproval">Approve &amp; create</button></div></div></div>
+  <div class="modal-backdrop" id="infoModal" hidden><div class="modal info-modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle"><h3 id="infoTitle">VoiceSync</h3><div class="info-content" id="infoContent"></div><div class="modal-actions"><button class="primary-btn" id="closeInfo">Done</button></div></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
