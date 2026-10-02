@@ -2,11 +2,6 @@
 
 Audit date: 2026-10-02
 
-## Scope
-
-No `.ppt` or `.pptx` file is present in this repository, so an exact slide-by-slide comparison is not reproducible from the checkout alone. This audit uses the PS-05 requirements already represented in the project (`README.md`, `WORKFLOW.md`, and the original implementation): voice input, live visual context, multimodal reasoning, spoken output, memory, human approval, action execution, verification, privacy, and graceful fallback.
-
-Per the project requirement, **Google Gemini is treated as the intended replacement for Claude**, not as a mismatch.
 
 ## Alignment matrix
 
