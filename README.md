@@ -88,15 +88,6 @@ TRELLO_LIST_NAME=VoiceSync Follow-ups
 > The code still supports Gemini 2.5 when selected explicitly and only sends
 > that model family its `thinkingBudget` setting.
 
-| Key missing | What happens |
-|---|---|
-| `GEMINI_API_KEY` | **Demo mode** — deterministic local replies, identical response shape, app fully usable |
-| `ELEVENLABS_API_KEY` | Speech falls back to the browser's built-in `speechSynthesis` voice |
-| Any Trello value | The action modal explicitly uses a local-only fallback; it never claims an external write |
-
-For Trello, create an API key and a user token with read/write access, copy the ID of the destination list, and set all three required values. `TRELLO_LIST_NAME` is only a friendly approval-dialog label. The token and list ID are never returned by `/api/health`.
-
-Check what's actually live at any time:
 
 ```bash
 curl localhost:4173/api/health
@@ -159,18 +150,6 @@ Add the Gemini, ElevenLabs, and optional Trello values from `.env.example` as En
 | `test/smoke.mjs` | 113 route, UI-contract, external-action and failure-mode checks |
 | `test/mock-upstreams.mjs` | Gemini + ElevenLabs test doubles used by the smoke test |
 | `AUDIT.md` | PS-05 capability matrix, verified behavior, and honest prototype boundaries |
-
----
-
-## Demo flow (3 minutes)
-
-1. Frame the problem: voice assistants can't see what you're working on.
-2. Ask "What do you see?" — shows the conversational loop and the TTS reply.
-3. Connect Camera, Screen, or a document image; the context panel goes **LIVE**.
-4. Submit one turn, change the shared screen, then ask **What changed?** — the pill confirms Gemini received the before/after frames.
-5. Say **Create a follow-up card for this issue** — Gemini proposes the action and the modal exposes editable fields plus the Trello destination.
-6. Approve it, open the verified Trello URL, then open **Session history** to show the persistent external receipt and latency diagnostics.
-7. Hit **Clear** and show that the live track and comparison baseline are genuinely released.
 
 ---
 
